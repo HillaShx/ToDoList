@@ -13,10 +13,12 @@ class Container extends Component {
     this.setTodo = this.setTodo.bind(this);
     this.createTodo = this.createTodo.bind(this);
     this.enableDisableBtn = this.enableDisableBtn.bind(this);
+    this.removeItem = this.removeItem.bind(this);
     this.state = {
       todos: [],
       completed: [],
-      todo: {}
+      todo: {},
+      enumItemsAtCreation: 0
     };
   }
 
@@ -32,34 +34,62 @@ class Container extends Component {
 
   createTodo(event) {
     this.enableDisableBtn();
-    let value = { todo: event.target.value };
     this.setState({
-      todo: value
+      todo: {
+        id: this.state.enumItemsAtCreation,
+        title: event.target.value,
+        description: "",
+        isStarred: false,
+      },
     });
   }
 
   addTodo() {
     if ($('#userInput').val().length === 0) {
+      // TODO : Add error message
       console.log('please enter something')
     } else {
-      document.getElementById("userInput").value = "";
+      $('#userInput').val("");
       this.setState({
         todos: [...this.state.todos, this.state.todo],
-        todo: {}
+        todo: {},
+        enumItemsAtCreation: this.state.enumItemsAtCreation + 1
       });
       this.enableDisableBtn();
     }
   }
 
-  setDone(todo) {
-    this.setState({
-      completed: [...this.state.completed, todo]
-    });
+  removeItem(list, itemIndex) {
+    console.log("this.state:");
+    console.log(this.state)
+    let newState = Object.assign({}, this.state);
+    console.log("newState:")
+    console.log(newState);
+    newState[list] = newState[list].filter(item=>item.id !== itemIndex);
+    this.setState(newState);
   }
 
-  setTodo(todo) {
+  componentDidUpdate() {
+    console.log("didUpdate:");
+    console.log(this.state);
+  }
+
+  setDone(itemNumber) {
+    // debugger;
+    let item = this.state.todos.find(x => x.id === itemNumber);
+    console.log("item:");
+    console.log(item);
+    this.removeItem("todos", itemNumber);
     this.setState({
-      todos: [...this.state.todos, todo]
+      completed: [...this.state.completed, item]
+      });
+  }
+
+  setTodo(itemNumber) {
+    let item = this.state.completed.find(x => x.id === itemNumber);
+    this.removeItem("completed", itemNumber);
+    this.setState({
+      todos: [...this.state.todos, item]
     });
   }
 
@@ -76,13 +106,13 @@ class Container extends Component {
         <div className="row">
           <div className="col col-md-12">
             <h2 className="todo-title">Todo List</h2>
-            <TodoList className="todo-list" setDone={this.setDone} todos={this.state.todos}/>
+            <TodoList className="todo-list" handleRemove={this.removeItem} setDone={this.setDone} todos={this.state.todos}/>
           </div>
         </div>
         <div className="row">
           <div className="col col-md-12">
             <h2 className="done-title">Done List</h2>
-            <TodoList className="done-list" setTodo={this.setTodo} completed={this.state.completed}/>
+            <TodoList className="done-list" handleRemove={this.removeItem} setTodo={this.setTodo} completed={this.state.completed}/>
           </div>
         </div>
       </div>
