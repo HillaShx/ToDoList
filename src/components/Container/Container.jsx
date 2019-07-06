@@ -48,7 +48,6 @@ class Container extends Component {
   addTodo() {
     if ($('#userInput').val().length === 0) {
       // TODO : Add error message
-      console.log('please enter something')
     } else {
       $('#userInput').val("");
       this.setState({
@@ -76,7 +75,6 @@ class Container extends Component {
   }
 
   setDone(itemNumber) {
-    // debugger;
     let item = this.state.todos.find(x => x.id === itemNumber);
     this.removeItem("todos", itemNumber);
     this.setState({

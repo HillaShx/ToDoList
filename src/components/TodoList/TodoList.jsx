@@ -22,21 +22,21 @@ class TodoList extends Component {
   }
 
   setDone(event) {
-    let itemNumber = parseInt(event.target.parentElement.getAttribute("data-key"));
+    let itemNumber = parseInt($(event.target).parent().attr("data-key"));
     this.props.setDone(itemNumber);
   }
 
   setTodo(event) {
-    let itemNumber = parseInt(event.target.parentElement.getAttribute("data-key"));
+    let itemNumber = parseInt($(event.target).parent().attr("data-key"));
     // this.removeTodo(event);
     this.props.setTodo(itemNumber);
   }
 
   setStar(event) {
     let starIcon = event.target;
-    let listItem = event.target.parentElement;
+    let listItem = $(starIcon).parent();
     let list = $('ul#todo-list').find(starIcon).length ? "todos" : "completed";
-    let itemNumber = parseInt(listItem.getAttribute("data-key"));
+    let itemNumber = parseInt(listItem.attr("data-key"));
     this.props.handleStar(list, itemNumber);
   }
 
