@@ -18,7 +18,6 @@ class TodoList extends Component {
   removeTodo(event) {
     let itemNumber = parseInt(event.target.parentElement.getAttribute("data-key"));
     let list = $('ul#todo-list').find(event.target).length ? "todos" : "completed";
-    console.log(list);
     this.props.handleRemove(list, itemNumber);
   }
 
@@ -34,16 +33,11 @@ class TodoList extends Component {
   }
 
   setStar(event) {
-    let item = event.target;
-    let li = event.target.parentElement;
-    let ul = event.target.parentElement.parentElement;
-    if (item.classList.contains("star-on")) {
-      item.classList.remove("star-on");
-      $(ul).append(li);
-    } else {
-      item.classList.add("star-on");
-      $(ul).prepend(li);
-    }
+    let starIcon = event.target;
+    let listItem = event.target.parentElement;
+    let list = $('ul#todo-list').find(starIcon).length ? "todos" : "completed";
+    let itemNumber = parseInt(listItem.getAttribute("data-key"));
+    this.props.handleStar(list, itemNumber);
   }
 
   render() {
@@ -54,7 +48,7 @@ class TodoList extends Component {
             <ul id="todo-list">
               {this.props.todos.map((todo, i) => (
                 <li data-key={todo.id} key={i}>
-                  <span className="star" onClick={this.setStar} />
+                  <span className={todo.isStarred ? "star selected" : "star unselected"} onClick={this.setStar} />
                   <img className="checked" onClick={this.setDone} src={todoIcon} />
                   {`${todo.title}`}
                   <img src={deleteIcon} className="delete" onClick={this.removeTodo} />
@@ -72,6 +66,7 @@ class TodoList extends Component {
             <ul id="done-list">
               {this.props.completed.map((todo, i) => (
                 <li data-key={todo.id} key={i}>
+                  <span className={todo.isStarred ? "star selected" : "star unselected"} onClick={this.setStar} />
                   <img className="checked" onClick={this.setTodo} src={doneIcon} />
                   {`${todo.title}`}
                   <img src={deleteIcon} className="delete" onClick={this.removeTodo} />

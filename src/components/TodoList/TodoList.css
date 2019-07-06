@@ -31,7 +31,6 @@ button {
 }
 
 .star {
-  background-image: url("../../images/star.svg");
   background-size: contain;
   background-repeat: no-repeat;
   width: 28px;
@@ -39,6 +38,10 @@ button {
   margin-right: 10px;
 }
 
-.star-on {
-  background-image: url("../../images/star-selected.svg");
+.unselected {
+  background-image: url("../../images/star.png");
+}
+
+.selected {
+  background-image: url("../../images/star-selected.png");
 }

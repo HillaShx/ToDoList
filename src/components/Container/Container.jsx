@@ -13,6 +13,7 @@ class Container extends Component {
     this.setTodo = this.setTodo.bind(this);
     this.createTodo = this.createTodo.bind(this);
     this.enableDisableBtn = this.enableDisableBtn.bind(this);
+    this.toggleStar = this.toggleStar.bind(this);
     this.removeItem = this.removeItem.bind(this);
     this.state = {
       todos: [],
@@ -60,25 +61,23 @@ class Container extends Component {
   }
 
   removeItem(list, itemIndex) {
-    console.log("this.state:");
-    console.log(this.state)
     let newState = Object.assign({}, this.state);
-    console.log("newState:")
-    console.log(newState);
-    newState[list] = newState[list].filter(item=>item.id !== itemIndex);
+    
+    newState[list] = newState[list].filter(item => item.id !== itemIndex);
     this.setState(newState);
   }
 
-  componentDidUpdate() {
-    console.log("didUpdate:");
-    console.log(this.state);
+  toggleStar(list, itemNumber) {
+    let newState = Object.assign({}, this.state);
+    let item = newState[list].find(x => x.id === itemNumber);
+    let itemIndex = newState[list].indexOf(item);
+    newState[list][itemIndex].isStarred = !newState[list][itemIndex].isStarred;
+    this.setState(newState);
   }
 
   setDone(itemNumber) {
     // debugger;
     let item = this.state.todos.find(x => x.id === itemNumber);
-    console.log("item:");
-    console.log(item);
     this.removeItem("todos", itemNumber);
     this.setState({
       completed: [...this.state.completed, item]
@@ -106,13 +105,13 @@ class Container extends Component {
         <div className="row">
           <div className="col col-md-12">
             <h2 className="todo-title">Todo List</h2>
-            <TodoList className="todo-list" handleRemove={this.removeItem} setDone={this.setDone} todos={this.state.todos}/>
+            <TodoList className="todo-list" handleStar={this.toggleStar} handleRemove={this.removeItem} setDone={this.setDone} todos={this.state.todos}/>
           </div>
         </div>
         <div className="row">
           <div className="col col-md-12">
             <h2 className="done-title">Done List</h2>
-            <TodoList className="done-list" handleRemove={this.removeItem} setTodo={this.setTodo} completed={this.state.completed}/>
+            <TodoList className="done-list" handleStar={this.toggleStar} handleRemove={this.removeItem} setTodo={this.setTodo} completed={this.state.completed}/>
           </div>
         </div>
       </div>
