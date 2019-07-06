@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./TodoList.css";
 import "bootstrap/dist/css/bootstrap.css";
-import $ from "jquery";
+// import $ from "jquery";
 import deleteIcon from "../../images/remove.png";
 import todoIcon from "../../images/todo.svg";
 import doneIcon from "../../images/done.svg";
@@ -36,10 +36,10 @@ class TodoList extends Component {
     let ul = event.target.parentElement.parentElement;
     if (item.classList.contains("star-on")) {
       item.classList.remove("star-on");
-      $(ul).append(li);
+      // $(ul).append(li);
     } else {
       item.classList.add("star-on");
-      $(ul).prepend(li);
+      // $(ul).prepend(li);
     }
   }
 

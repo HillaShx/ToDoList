@@ -56,14 +56,37 @@ ul {
   outline: none;
 }
 
-.btn {
+.butn-disabled {
+  display: inline-block;
+  padding: 4px 6px;
+  border-radius: 5px;
   margin: 5px;
   background-color: rgb(121, 235, 121);
   color:gray;
 }
 
-.btn:hover {
+.butn {
+  display: inline-block;
+  padding: 4px 6px;
+  border-radius: 5px;
+  margin: 5px;
+  cursor: pointer;
+  background-color: rgb(121, 235, 121);
+  color:gray;
   box-shadow: 1px 1px 9px -3px rgb(120, 120, 148);
   color:black;
   outline:none;
+}
+
+.butn:hover {
+}
+
+.no-select {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 }
