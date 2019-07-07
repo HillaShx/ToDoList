@@ -42,7 +42,9 @@ class TodoList extends Component {
   }
 
   editItem(e) {
-    // open popup to edit item
+    let list = $('ul#todo-list').find(e.target).length ? "todos" : "completed";
+    let itemNumber = parseInt($(e.target).parent().attr("data-key"));
+    this.props.handleEdit(list, itemNumber)
   }
 
   render() {

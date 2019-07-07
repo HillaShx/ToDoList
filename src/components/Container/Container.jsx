@@ -11,6 +11,7 @@ class Container extends Component {
     this.addTodo = this.addTodo.bind(this);
     this.setDone = this.setDone.bind(this);
     this.setTodo = this.setTodo.bind(this);
+    this.editItem = this.editItem.bind(this);
     this.createTodo = this.createTodo.bind(this);
     this.enableDisableBtn = this.enableDisableBtn.bind(this);
     this.toggleStar = this.toggleStar.bind(this);
@@ -77,6 +78,22 @@ class Container extends Component {
     this.setState(newState);
   }
 
+  editItem(list, itemNumber) {
+    let item = this.state[list].find(x => x.id === itemNumber);
+    $('#edit-item-title').val(item.title);
+    $($('.darken-screen')[0]).removeClass('hide');
+    $($('.popup.edit')[0]).removeClass('hide');
+    $('#submit-edit').click(()=>{
+      let newState = Object.assign({}, this.state);
+      item.title = $('#edit-item-title').val();
+      item.description = $('#edit-item-description').val();
+      // TODO: Implement date
+      // item.date = 
+      this.setState(newState);
+      $($('.darken-screen')[0]).addClass('hide');
+    })
+  }
+
   setDone(itemNumber) {
     let item = this.state.todos.find(x => x.id === itemNumber);
     this.removeItem("todos", itemNumber);
@@ -107,14 +124,22 @@ class Container extends Component {
         <div className="row">
           <div className="col col-md-12">
             <h2 className="title todo">Todo List</h2>
-            <TodoList className="todo-list" handleStar={this.toggleStar} handleRemove={this.removeItem} setDone={this.setDone} todos={this.state.todos}/>
+            <TodoList className="todo-list" handleStar={this.toggleStar} handleEdit={this.editItem} handleRemove={this.removeItem} setDone={this.setDone} todos={this.state.todos}/>
           </div>
         </div>
         <div className="row">
           <div className="col col-md-12">
             <h2 className="title">Done List</h2>
-            <TodoList className="done-list" handleStar={this.toggleStar} handleRemove={this.removeItem} setTodo={this.setTodo} completed={this.state.completed}/>
+            <TodoList className="done-list" handleStar={this.toggleStar} handleEdit={this.editItem} handleRemove={this.removeItem} setTodo={this.setTodo} completed={this.state.completed}/>
           </div>
+        </div>
+      </div>
+      <div className="darken-screen hide">
+        <div className="popup edit">
+          <h4>Edit the item: <div onClick={this.submitEditItem} className="butn" id="submit-edit">save</div></h4>
+          <label htmlFor="edit-item-title">Item Title<br/><input id="edit-item-title" type="text"/></label><br/>
+          <label htmlFor="edit-date">Item Due Date<br/><input type="date" name="" id="edit-date"/></label><br/>
+          <label htmlFor="edit-item-description">Item Description<br/><textarea name="" id="edit-item-description"/></label>
         </div>
       </div>
       </React.Fragment>
