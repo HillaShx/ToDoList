@@ -1,11 +1,10 @@
 li {
-  align-items: center;
-  display: flex;
   margin: 5px;
-  background-color: lightgray;
+  background-color: #f4f4f4;
   font-family: cursive;
   padding: 4px;
-  font-size: 19px;
+  text-align: start;
+  position: relative;
 }
 
 li:hover {
@@ -17,31 +16,52 @@ button {
   margin: 10px;
 }
 
-.delete {
-  margin-left: auto;
-  margin-right: 5px;
-  width: 25px;
-  height: 25px;
+#msg {
+  font-size: 20px;
+  color: red;
+  text-align: start;
+  position: absolute;
+  top: 50px;
+  left: 25px;
 }
 
-.checked {
-  width: 28px;
-  height: 28px;
-  margin-right: 10px;
+.msg-empty {
+  color: grey;
 }
 
-.star {
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 28px;
-  height: 28px;
-  margin-right: 10px;
+p.item-title {
+  display: inline-block;
+  position: relative;
+  margin-bottom: 0;
+  left: 38px;
+  width: 86%;
+  font-size: 22px;
 }
 
-.unselected {
-  background-image: url("../../images/star.png");
+.icon {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: 2px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-.selected {
-  background-image: url("../../images/star-selected.png");
+.icon.star.unselected {
+  background-image: url('../../images/star.png');
+  background-position: center;
+  background-size: cover;
+  left: -40px;
+}
+
+.icon.star.selected {
+  background-image: url('../../images/star-selected.png');
+  background-position: center;
+  background-size: cover;
+  left: -40px;
+}
+
+.icon.remove {
+  right: 4px;
 }

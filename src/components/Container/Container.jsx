@@ -33,12 +33,13 @@ class Container extends Component {
     }
   }
 
-  createTodo(event) {
+  createTodo(e) {
+    $('#msg').empty();
     this.enableDisableBtn();
     this.setState({
       todo: {
         id: this.state.enumItemsAtCreation,
-        title: event.target.value,
+        title: e.target.value,
         description: "",
         isStarred: false,
       },
@@ -47,7 +48,9 @@ class Container extends Component {
 
   addTodo() {
     if ($('#userInput').val().length === 0) {
-      // TODO : Add error message
+      $('#msg').show()
+      $('#msg').text('please type something')
+      // setTimeout(()=>{$('#msg').fadeOut()},1000)
     } else {
       $('#userInput').val("");
       this.setState({
@@ -93,22 +96,23 @@ class Container extends Component {
   render() {
     return (
       <React.Fragment>
-      <div className="row title">
+      <div className="row app-title">
           <img id="logo" src={Logo} />
           <p className="headline">Todo List</p>
         </div>
       <div className="container">
         <input id="userInput" className="input" onChange={this.createTodo} type="text" placeholder="Add Your Todo..."/>
         <span id="add-btn" className="butn-disabled no-select" onClick={this.addTodo}>Add Todo</span>
+        <div id="msg"></div>
         <div className="row">
           <div className="col col-md-12">
-            <h2 className="todo-title">Todo List</h2>
+            <h2 className="title todo">Todo List</h2>
             <TodoList className="todo-list" handleStar={this.toggleStar} handleRemove={this.removeItem} setDone={this.setDone} todos={this.state.todos}/>
           </div>
         </div>
         <div className="row">
           <div className="col col-md-12">
-            <h2 className="done-title">Done List</h2>
+            <h2 className="title">Done List</h2>
             <TodoList className="done-list" handleStar={this.toggleStar} handleRemove={this.removeItem} setTodo={this.setTodo} completed={this.state.completed}/>
           </div>
         </div>
